@@ -5,7 +5,7 @@ import Login from './login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Registro from './registro/Registro';
 import Inicio from './menu/Inicio';
-
+ 
 const useStyles = makeStyles((theme) => ({
   forgotPassword: {
     padding: theme.spacing(2),

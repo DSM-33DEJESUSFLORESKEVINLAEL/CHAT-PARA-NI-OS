@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Registro.css';
 import { Link } from 'react-router-dom';
-
+import { createRegistro } from '../services/registroService'; // Asegúrate de ajustar la ruta según tu estructura
 
 function Registro() {
   const [name, setName] = useState('');
@@ -11,17 +11,25 @@ function Registro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Formulario enviado:', {
-      name,
-      surname,
-      city,
-      phone,
-      email,
-      password,
-    });
+    try {
+      const registro = {
+        nombre: name,
+        apellidos: surname,
+        ciudad: city,
+        telefono: phone,
+        correoElectronico: email,
+        contraseña: password,
+      };
+      await createRegistro(registro);
+      setMessage('Registro exitoso!');
+    } catch (error) {
+      console.error('Error al registrar:', error);
+      setMessage('Hubo un error al registrar, inténtelo de nuevo.');
+    }
   };
 
   return (
@@ -29,6 +37,7 @@ function Registro() {
       <div className="login-container">
         <div className="login-form-container">
           <h2 className="login-title">REGÍSTRATE</h2>
+          {message && <p className="message">{message}</p>}
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
